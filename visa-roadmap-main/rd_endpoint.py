@@ -3,16 +3,17 @@ import vertexai
 from vertexai.generative_models import GenerativeModel, Part
 import vertexai.preview.generative_models as generative_models
 from pprint import pprint
-
+import google.generativeai as genai
+import os
 #input_text = """Questionnaire and Response   Name:Oghenekaro Rachael Ojoh   Date of Birth: 31st May 1982   Marital Status:Single   Product Type:EEP/PNP   IELTS scores for Principal applicant: Listening- 8.5, Reading-8.0, Speaking-7.5,  and Writing-7.5 (Projected)   IELTS scores for Dependent spouse: Listening-, Reading-, Speaking-, and  Writing-None   Available degrees for Principal applicant: Secondary school certificate and or/  OND (Ordinary National diploma) HND (Higher National Diploma), Bachelor\'s  degree, Post graduate Diploma, Masters degree, PHD (Doctorate): Diploma and  Bachelors degree.   Available degrees for Dependent spouse: Secondary school certificate and or/  OND (Ordinary National diploma) HND (Higher National Diploma), Bachelor\'s  degree, Post graduate Diploma, Masters degree, PHD (Doctorate): None   Years of work experience for Principal applicant:3 years and more.   Have you had a previous Canada visa application? If yes, how many?:None   Details of Previous Canada visa application:(date/month/year, start and end date  he academic qualification that was was filled, start and end dates off all work  experience filled )None   Do you have family members who reside in Canada as permanent residence? If  yes, specify your relationship with them and the province in which they  reside.None"""
-
+from dotenv import load_dotenv 
+load_dotenv()
 
 def multiturn_generate_content(input_text):
-  vertexai.init(project="247572588539", location="us-central1")
-  model = GenerativeModel(
-    "projects/247572588539/locations/us-central1/endpoints/1135626186701930496",
-    system_instruction=[system_prompt],safety_settings= safety_settings
-  )
+  api_key = os.getenv("api_key")    
+  genai.configure(api_key=api_key)
+  model = genai.GenerativeModel('gemini-1.5-flash')
+
   response = model.generate_content(contents=[input_text],generation_config=generation_config,stream=True)
   return response
 
