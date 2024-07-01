@@ -72,3 +72,4 @@ tzdata==2024.1
 urllib3==2.2.2
 vertexai==1.49.0
 watchdog==4.0.1
+python-dotenv==1.0.1
