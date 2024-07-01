@@ -12,9 +12,9 @@ load_dotenv()
 def multiturn_generate_content(input_text):
   api_key = os.getenv("api_key")    
   genai.configure(api_key=api_key)
-  model = genai.GenerativeModel('gemini-1.5-flash', system_instructison=[system_prompt], safety_settings=safety_settings)
+  model = genai.GenerativeModel('gemini-1.5-flash')
 
-  response = model.generate_content(contents=[input_text],generation_config=generation_config,stream=True)
+  response = model.generate_content(contents=[system_prompt,input_text],generation_config=generation_config,stream=True)
   return response
 
 
